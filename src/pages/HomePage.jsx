@@ -1,7 +1,34 @@
+import axios from "axios";
+import { useState, useEffect } from "react";
+
+const apiURL = "https://ih-countries-api.herokuapp.com/countries";
+
 function HomePage() {
+    const [countries, setCountries] = useState([]);
+
+    // useEffect - Initial render (Mounting)
+    useEffect(() => {
+        const getCountries = async () => {
+            const response = await axios.get(apiURL);
+            const data = response.data;
+            console.log("data", data);
+            setCountries(data);
+        };
+        getCountries();
+    }, []);
+
     return (
         <div>
-            <div
+            <h1 style={{ fontSize: "24px" }}>
+                WikiCountries: Your Guide to the World
+            </h1>
+            {countries.map((country) => {
+                <div key={country._id}>
+                    return
+                    <h1>{country.name.common}</h1>
+                </div>;
+            })}
+            {/* <div
                 className="container"
                 style={{ maxHeight: "90vh", overflow: "scroll" }}
             >
@@ -101,7 +128,7 @@ function HomePage() {
                         🇿🇼 Zimbabwe
                     </a>
                 </div>
-            </div>
+            </div> */}
         </div>
     );
 }
